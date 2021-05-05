@@ -66,8 +66,8 @@ class PrimaryPlotWidget(QWidget):
                 return
 
             self._stat_label.setText(_label_text(x, y, [
-                [p, curve.yData[_find_value_index(curve.xData, x)]]
-                for p, curve in self._curves_00.items()
+                [f, curve.yData[_find_value_index(curve.xData, x)]]
+                for f, curve in self._curves_00.items()
             ]))
 
     def _init(self):
@@ -85,16 +85,16 @@ class PrimaryPlotWidget(QWidget):
 
 
 def _plot_curves(datas, curves, plot):
-    for pow_lo, data in datas.items():
+    for f_lo, data in datas.items():
         curve_xs, curve_ys = zip(*data)
         try:
-            curves[pow_lo].setData(x=curve_xs, y=curve_ys)
+            curves[f_lo].setData(x=curve_xs, y=curve_ys)
         except KeyError:
             try:
                 color = colors[len(curves)]
             except IndexError:
                 color = colors[len(curves) - len(colors)]
-            curves[pow_lo] = pg.PlotDataItem(
+            curves[f_lo] = pg.PlotDataItem(
                 curve_xs,
                 curve_ys,
                 pen=pg.mkPen(
@@ -104,13 +104,13 @@ def _plot_curves(datas, curves, plot):
                 symbol='o',
                 symbolSize=5,
                 symbolBrush=color,
-                name=f'{pow_lo} дБм'
+                name=f'{f_lo} ГГц'
             )
-            plot.addItem(curves[pow_lo])
+            plot.addItem(curves[f_lo])
 
 
 def _label_text(x, y, vals):
-    vals_str = ''.join(f'   <span style="color:{colors[i]}">{p:0.1f}={v:0.2f}</span>' for i, (p, v) in enumerate(vals))
+    vals_str = ''.join(f'   <span style="color:{colors[i]}">{f:0.1f}={v:0.2f}</span>' for i, (f, v) in enumerate(vals))
     return f"<span style='font-size: 12pt'>x={x:0.2f},   y={y:0.2f}   {vals_str}</span>"
 
 

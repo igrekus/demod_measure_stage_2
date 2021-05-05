@@ -74,7 +74,7 @@ class MeasureResult:
             'k_loss': round(k_loss, 2),
         }
 
-        self.data[p_lo].append([p_rf, k_loss])
+        self.data[f_lo].append([p_rf, k_loss])
         self._processed.append({**self._report})
 
     def clear(self):

@@ -51,9 +51,9 @@ class MeasureResult:
         # - создать график зависимости Кп(Рвх).
 
         # region calc
-        f_rf = data['f_rf'] / GHz
-        f_lo = data['f_lo'] / GHz
-        f_pch = (f_rf - f_lo) / MHz
+        f_rf = data['f_rf']
+        f_lo = data['f_lo']
+        f_pch = (f_rf - f_lo)
 
         p_pch = data['pow_read']
         p_lo = data['p_lo']

@@ -230,7 +230,7 @@ class InstrumentController(QObject):
                 gen_lo.send(f'OUTP:STAT ON')
                 gen_rf.send(f'OUTP:STAT ON')
 
-                time.sleep(0.5)
+                time.sleep(0.1)
                 if not mock_enabled:
                     time.sleep(0.5)
 
@@ -241,7 +241,6 @@ class InstrumentController(QObject):
                 sa.send(f':SENSe:FREQuency:CENTer {center_freq}GHz')
                 sa.send(f':CALCulate:MARKer1:X:CENTer {center_freq}GHz')
 
-                # time.sleep(0.5)
                 if not mock_enabled:
                     time.sleep(0.5)
 

@@ -41,9 +41,11 @@ class PrimaryPlotWidget(QWidget):
         # self._plot_00.setYRange(20, 55, padding=0)
         self._plot_00.enableAutoRange('x')
         self._plot_00.enableAutoRange('y')
-        self._plot_00.addLegend(offset=(30, 300))
         self._plot_00.showGrid(x=True, y=True)
         self._vb_00 = self._plot_00.vb
+        rect = self._vb_00.viewRect()
+        self._plot_00.addLegend(offset=(rect.x() + 200, rect.y() + rect.height() - 50))
+        self._plot_00.addLegend(offset=(30, 300))
         self._vLine_00 = pg.InfiniteLine(angle=90, movable=False)
         self._hLine_00 = pg.InfiniteLine(angle=0, movable=False)
         self._plot_00.addItem(self._vLine_00, ignoreBounds=True)

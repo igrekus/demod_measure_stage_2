@@ -272,6 +272,19 @@ class InstrumentController(QObject):
             with open('out.txt', mode='wt', encoding='utf-8') as f:
                 f.send(str(res))
 
+        gen_lo.send(f'OUTP:STAT OFF')
+        gen_rf.send(f'OUTP:STAT OFF')
+
+        if not mock_enabled:
+            time.sleep(0.5)
+
+        src.send('OUTPut OFF')
+
+        gen_rf.send(f'SOUR:POW {pow_rf_start}dbm')
+        gen_lo.send(f'SOUR:POW {pow_lo}dbm')
+
+        gen_rf.send(f'SOUR:FREQ {freq_rf_start}GHz')
+        gen_lo.send(f'SOUR:FREQ {freq_rf_start}GHz')
         return res
 
     def _add_measure_point(self, data):

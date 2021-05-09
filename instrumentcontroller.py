@@ -14,6 +14,7 @@ from measureresult import MeasureResult
 
 # TODO calibration
 # TODO add attenuation field -- calculate each pow point + att power
+# TODO clear plots after data reset
 
 class InstrumentController(QObject):
     pointReady = pyqtSignal()

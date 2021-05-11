@@ -252,7 +252,7 @@ class InstrumentController(QObject):
 
         if not mock_enabled:
             with open('out.txt', mode='wt', encoding='utf-8') as f:
-                f.send(str(res))
+                f.write(str(res))
 
         gen_lo.send(f'OUTP:STAT OFF')
         gen_rf.send(f'OUTP:STAT OFF')

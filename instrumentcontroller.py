@@ -175,6 +175,9 @@ class InstrumentController(QObject):
         sa.send(f'DISP:WIND:TRAC:Y:RLEV {ref_level}')
         sa.send(f'DISP:WIND:TRAC:Y:PDIV {scale_y}')
 
+        gen_lo.send(f':OUTP:MOD:STAT OFF')
+        # gen_rf.send(f':OUTP:MOD:STAT OFF')
+
         if mock_enabled:
             with open('./mock_data/-5db.txt', mode='rt', encoding='utf-8') as f:
                 index = 0

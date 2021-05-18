@@ -108,6 +108,10 @@ class MeasureWidget(QWidget):
         self._selectedDevice = value
         self.selectedChanged.emit(value)
 
+    @pyqtSlot(bool)
+    def on_grpParams_toggled(self, state):
+        self._ui.widgetContainer.setVisible(state)
+
     def _modePreConnect(self):
         self._ui.btnCheck.setEnabled(False)
         self._ui.btnMeasure.setEnabled(False)

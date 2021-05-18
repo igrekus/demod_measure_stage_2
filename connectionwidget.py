@@ -49,6 +49,10 @@ class ConnectionWidget(QWidget):
                                         self.connectTaskComplete,
                                         {k: w.address for k, w in self._widgets.items()}))
 
+    @pyqtSlot(bool)
+    def on_grpInstruments_toggled(self, state):
+        self._ui.widgetContainer.setVisible(state)
+
     def connectTaskComplete(self):
         if not self._controller.found:
             print('connect error, check connection')

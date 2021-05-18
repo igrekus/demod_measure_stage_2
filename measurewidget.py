@@ -116,30 +116,40 @@ class MeasureWidget(QWidget):
         self._ui.btnCheck.setEnabled(False)
         self._ui.btnMeasure.setEnabled(False)
         self._ui.btnCancel.setEnabled(False)
+        self._ui.btnCalibrateLO.setEnabled(False)
+        self._ui.btnCalibrateRf.setEnabled(False)
         self._devices.enabled = True
 
     def _modePreCheck(self):
         self._ui.btnCheck.setEnabled(True)
         self._ui.btnMeasure.setEnabled(False)
         self._ui.btnCancel.setEnabled(False)
+        self._ui.btnCalibrateLO.setEnabled(False)
+        self._ui.btnCalibrateRF.setEnabled(False)
         self._devices.enabled = True
 
     def _modeDuringCheck(self):
         self._ui.btnCheck.setEnabled(False)
         self._ui.btnMeasure.setEnabled(False)
         self._ui.btnCancel.setEnabled(False)
+        self._ui.btnCalibrateLO.setEnabled(False)
+        self._ui.btnCalibrateRF.setEnabled(False)
         self._devices.enabled = False
 
     def _modePreMeasure(self):
         self._ui.btnCheck.setEnabled(False)
         self._ui.btnMeasure.setEnabled(True)
         self._ui.btnCancel.setEnabled(False)
+        self._ui.btnCalibrateLO.setEnabled(True)
+        self._ui.btnCalibrateRF.setEnabled(True)
         self._devices.enabled = False
 
     def _modeDuringMeasure(self):
         self._ui.btnCheck.setEnabled(False)
         self._ui.btnMeasure.setEnabled(False)
         self._ui.btnCancel.setEnabled(True)
+        self._ui.btnCalibrateLO.setEnabled(False)
+        self._ui.btnCalibrateRF.setEnabled(False)
         self._devices.enabled = False
 
     def updateWidgets(self, params):

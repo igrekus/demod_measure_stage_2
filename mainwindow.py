@@ -60,6 +60,7 @@ class MainWindow(QMainWindow):
     def on_measureComplete(self):
         print('meas complete')
         self._plotWidget.plot()
+        self._instrumentController.result.save_adjustment_template()
 
     @pyqtSlot()
     def on_measureStarted(self):

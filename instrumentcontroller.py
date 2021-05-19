@@ -304,8 +304,6 @@ class InstrumentController(QObject):
 
         src.send(f'APPLY p6v,{src_u}V,{src_i}mA')
 
-        gen_lo.send(f'SOUR:POW {pow_lo}dbm')
-
         sa.send(':CAL:AUTO OFF')
         sa.send(':SENS:FREQ:SPAN 1MHz')
         sa.send(f'DISP:WIND:TRAC:Y:RLEV {ref_level}')
@@ -322,6 +320,8 @@ class InstrumentController(QObject):
         res = []
         for freq_lo, freq_rf in zip(freq_lo_values, freq_rf_values):
             gen_lo.send(f'SOUR:FREQ {freq_lo}GHz')
+            gen_lo.send(f'SOUR:POW {pow_lo + self._calibrated_pows_lo.get(freq_lo, 0)}dbm')
+
             gen_rf.send(f'SOUR:FREQ {freq_rf}GHz')
 
             for pow_rf in pow_rf_values:
@@ -342,7 +342,7 @@ class InstrumentController(QObject):
                     gen_lo.send(f'SOUR:FREQ {freq_rf_start}GHz')
                     raise RuntimeError('measurement cancelled')
 
-                gen_rf.send(f'SOUR:POW {pow_rf}dbm')
+                gen_rf.send(f'SOUR:POW {pow_rf + self._calibrated_pows_rf.get(freq_rf, dict()).get(pow_rf, 0)}dbm')
 
                 src.send('OUTPut ON')
 

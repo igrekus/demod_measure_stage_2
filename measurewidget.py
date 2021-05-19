@@ -31,6 +31,7 @@ class MeasureWidget(QWidget):
     sampleFound = pyqtSignal()
     measureComplete = pyqtSignal()
     measureStarted = pyqtSignal()
+    calibrateFinished = pyqtSignal()
 
     def __init__(self, parent=None, controller=None):
         super().__init__(parent=parent)

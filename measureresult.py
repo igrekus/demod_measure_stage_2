@@ -2,7 +2,6 @@ import datetime
 import os.path
 
 from collections import defaultdict
-from math import log10, cos, radians
 from subprocess import Popen
 from textwrap import dedent
 

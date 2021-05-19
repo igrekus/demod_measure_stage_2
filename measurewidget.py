@@ -31,6 +31,7 @@ class MeasureWidget(QWidget):
     sampleFound = pyqtSignal()
     measureComplete = pyqtSignal()
     measureStarted = pyqtSignal()
+    calibrateFinished = pyqtSignal()
 
     def __init__(self, parent=None, controller=None):
         super().__init__(parent=parent)
@@ -64,6 +65,12 @@ class MeasureWidget(QWidget):
         self.sampleFound.emit()
         return True
 
+    def calibrate(self, what):
+        raise NotImplementedError
+
+    def calibrateTaskComplete(self):
+        raise NotImplementedError
+
     def measure(self):
         print('measuring...')
         self._modeDuringMeasure()
@@ -91,6 +98,16 @@ class MeasureWidget(QWidget):
     def on_btnCheck_clicked(self):
         print('checking sample presence')
         self.check()
+
+    @pyqtSlot()
+    def on_btnCalibrateLO_clicked(self):
+        print('start LO calibration')
+        self.calibrate('LO')
+
+    @pyqtSlot()
+    def on_btnCalibrateRF_clicked(self):
+        print('start RF calibration')
+        self.calibrate('RF')
 
     @pyqtSlot()
     def on_btnMeasure_clicked(self):
@@ -327,6 +344,22 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         if not res:
             self._token = CancelToken()
         return res
+
+    def calibrate(self, what):
+        print(f'calibrating {what}...')
+        self._modeDuringMeasure()
+        self._threads.start(
+            MeasureTask(
+                self._controller._calibrateLO if what == 'LO' else self._controller._calibrateRF,
+                self.calibrateTaskComplete,
+                self._token,
+                [self._selectedDevice, self._params]
+            ))
+
+    def calibrateTaskComplete(self):
+        print('calibrate finished')
+        self._modePreMeasure()
+        self.calibrateFinished.emit()
 
     def measure(self):
         print('subclass measuring...')

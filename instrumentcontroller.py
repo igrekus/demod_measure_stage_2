@@ -69,6 +69,16 @@ class InstrumentController(QObject):
             with open('./params.ini', 'rt', encoding='utf-8') as f:
                 self.secondaryParams = ast.literal_eval(''.join(f.readlines()))
 
+        self._calibrated_pows_lo = dict()
+        if isfile('./cal_lo.ini'):
+            with open('./cal_lo.ini', mode='rt', encoding='utf-8') as f:
+                self._calibrated_pows_lo = ast.literal_eval(''.join(f.readlines()))
+
+        self._calibrated_pows_rf = dict()
+        if isfile('./cal_rf.ini'):
+            with open('./cal_rf.ini', mode='rt', encoding='utf-8') as f:
+                self._calibrated_pows_rf = ast.literal_eval(''.join(f.readlines()))
+
         self._instruments = dict()
         self.found = False
         self.present = False
@@ -76,8 +86,6 @@ class InstrumentController(QObject):
         self.only_main_states = False
 
         self.result = MeasureResult()
-        self._calibrated_pows_lo = {}
-        self._calibrated_pows_rf = {}
 
     def __str__(self):
         return f'{self._instruments}'

@@ -156,13 +156,13 @@ class InstrumentController(QObject):
             gen_lo.send(f'OUTP:STAT ON')
 
             if not mock_enabled:
-                time.sleep(0.25)
+                time.sleep(0.35)
 
             sa.send(f':SENSe:FREQuency:CENTer {freq}GHz')
             sa.send(f':CALCulate:MARKer1:X:CENTer {freq}GHz')
 
             if not mock_enabled:
-                time.sleep(0.25)
+                time.sleep(0.35)
 
             pow_read = float(sa.query(':CALCulate:MARKer:Y?'))
             loss = abs(pow_lo - pow_read)
@@ -224,13 +224,13 @@ class InstrumentController(QObject):
                 gen_rf.send(f'OUTP:STAT ON')
 
                 if not mock_enabled:
-                    time.sleep(0.25)
+                    time.sleep(0.35)
 
                 sa.send(f':SENSe:FREQuency:CENTer {freq}GHz')
                 sa.send(f':CALCulate:MARKer1:X:CENTer {freq}GHz')
 
                 if not mock_enabled:
-                    time.sleep(0.25)
+                    time.sleep(0.35)
 
                 pow_read = float(sa.query(':CALCulate:MARKer:Y?'))
                 loss = abs(pow_rf - pow_read)

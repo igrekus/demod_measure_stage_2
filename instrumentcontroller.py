@@ -328,7 +328,9 @@ class InstrumentController(QObject):
         res = []
         for freq_lo, freq_rf in zip(freq_lo_values, freq_rf_values):
             gen_lo.send(f'SOUR:FREQ {freq_lo}GHz')
-            gen_lo.send(f'SOUR:POW {pow_lo + self._calibrated_pows_lo.get(freq_lo, 0)}dbm')
+            delta_lo = round(self._calibrated_pows_lo.get(freq_lo, 0) / 2, 2)
+            print('delta LO:', delta_lo)
+            gen_lo.send(f'SOUR:POW {pow_lo + delta_lo}dbm')
 
             gen_rf.send(f'SOUR:FREQ {freq_rf}GHz')
 
@@ -350,7 +352,9 @@ class InstrumentController(QObject):
                     gen_lo.send(f'SOUR:FREQ {freq_rf_start}GHz')
                     raise RuntimeError('measurement cancelled')
 
-                gen_rf.send(f'SOUR:POW {pow_rf + self._calibrated_pows_rf.get(freq_rf, dict()).get(pow_rf, 0)}dbm')
+                delta_rf = round(self._calibrated_pows_rf.get(freq_rf, dict()).get(pow_rf, 0) / 2, 2)
+                print('delta RF:', delta_rf)
+                gen_rf.send(f'SOUR:POW {pow_rf + delta_rf}dbm')
 
                 src.send('OUTPut ON')
 

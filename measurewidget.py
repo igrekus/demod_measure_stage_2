@@ -215,6 +215,10 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinFloDelta.setValue(0.5)
         self._spinFloDelta.setSuffix(' ГГц')
         self._devices._layout.addRow('ΔFгет=', self._spinFloDelta)
+
+        self._checkHalfFreqLo = QCheckBox(parent=self)
+        self._checkHalfFreqLo.setChecked(False)
+        self._devices._layout.addRow('1/2 Fгет.', self._checkHalfFreqLo)
         # endregion LO
 
         # region RF params
@@ -312,6 +316,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinFloMin.valueChanged.connect(self.on_params_changed)
         self._spinFloMax.valueChanged.connect(self.on_params_changed)
         self._spinFloDelta.valueChanged.connect(self.on_params_changed)
+        self._checkHalfFreqLo.toggled.connect(self.on_params_changed)
 
         self._spinPrfMin.valueChanged.connect(self.on_params_changed)
         self._spinPrfMax.valueChanged.connect(self.on_params_changed)
@@ -391,6 +396,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
             'Flo_delta': self._spinFloDelta.value(),
             'Flo_max': self._spinFloMax.value(),
             'Flo_min': self._spinFloMin.value(),
+            'half_f_lo': self._checkHalfFreqLo.isChecked(),
             'Prf_delta': self._spinPrfDelta.value(),
             'Prf_max': self._spinPrfMax.value(),
             'Prf_min': self._spinPrfMin.value(),
@@ -410,6 +416,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinFloMax.setValue(params['Flo_max'])
         self._spinFloMin.setValue(params['Flo_min'])
         self._spinPrfDelta.setValue(params['Prf_delta'])
+        self._checkHalfFreqLo.setChecked(params['half_f_lo'])
         self._spinPrfMax.setValue(params['Prf_max'])
         self._spinPrfMin.setValue(params['Prf_min'])
         self._spinFrfDelta.setValue(params['Frf_delta'])

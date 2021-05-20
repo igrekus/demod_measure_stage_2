@@ -17,6 +17,13 @@ from measureresult import MeasureResult
 # TODO add attenuation field -- calculate each pow point + att power
 # TODO clear plots after data reset
 
+# TODO calc - 1db relative to starting point, record freq
+# TODO plot - 1db points
+# TODO take screenshot of main window
+
+# TODO add setting for 1/2 RF
+# TODO fix plot color number
+
 class InstrumentController(QObject):
     pointReady = pyqtSignal()
 

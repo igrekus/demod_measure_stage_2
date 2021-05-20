@@ -25,7 +25,7 @@ class PrimaryPlotWidget(QWidget):
         self._win = pg.GraphicsLayoutWidget(show=True)
         self._win.setBackground('w')
 
-        self._stat_label = QLabel('Mouse position:')
+        self._stat_label = QLabel('Mouse:')
         self._stat_label.setAlignment(Qt.AlignRight)
 
         self._grid.addWidget(self._stat_label, 0, 0)
@@ -112,7 +112,7 @@ def _plot_curves(datas, curves, plot):
 
 def _label_text(x, y, vals):
     vals_str = ''.join(f'   <span style="color:{colors[i]}">{f:0.1f}={v:0.2f}</span>' for i, (f, v) in enumerate(vals))
-    return f"<span style='font-size: 12pt'>x={x:0.2f},   y={y:0.2f}   {vals_str}</span>"
+    return f"<span style='font-size: 8pt'>x={x:0.2f},   y={y:0.2f}   {vals_str}</span>"
 
 
 def _find_value_index(freqs: list, freq):

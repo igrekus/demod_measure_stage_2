@@ -129,6 +129,7 @@ class InstrumentController(QObject):
         freq_lo_start = secondary['Flo_min']
         freq_lo_end = secondary['Flo_max']
         freq_lo_step = secondary['Flo_delta']
+        freq_lo_half = secondary['half_f_lo']
 
         freq_lo_values = [round(x, 3) for x in
                           np.arange(start=freq_lo_start, stop=freq_lo_end + 0.0001, step=freq_lo_step)]
@@ -144,6 +145,10 @@ class InstrumentController(QObject):
 
         result = {}
         for freq in freq_lo_values:
+
+            if freq_lo_half:
+                freq /= 2
+
             if token.cancelled:
                 gen_lo.send(f'OUTP:STAT OFF')
                 time.sleep(0.5)
@@ -294,6 +299,7 @@ class InstrumentController(QObject):
         freq_lo_start = secondary['Flo_min']
         freq_lo_end = secondary['Flo_max']
         freq_lo_step = secondary['Flo_delta']
+        freq_lo_half = secondary['half_f_lo']
 
         pow_rf_start = secondary['Prf_min']
         pow_rf_end = secondary['Prf_max']
@@ -302,7 +308,6 @@ class InstrumentController(QObject):
         freq_rf_start = secondary['Frf_min']
         freq_rf_end = secondary['Frf_max']
         freq_rf_step = secondary['Frf_delta']
-        freq_lo_half = secondary['half_f_lo']
 
         ref_level = secondary['ref_lev']
         scale_y = secondary['scale_y']

@@ -17,9 +17,6 @@ from measureresult import MeasureResult
 # TODO plot - 1db points
 # TODO take screenshot of main window
 
-# TODO add setting for 1/2 RF
-# TODO fix plot color number
-
 class InstrumentController(QObject):
     pointReady = pyqtSignal()
 

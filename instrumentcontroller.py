@@ -336,7 +336,13 @@ class InstrumentController(QObject):
 
         res = []
         for freq_lo, freq_rf in zip(freq_lo_values, freq_rf_values):
+
+            freq_lo_label = float(freq_lo) * 2
+            if freq_lo_x2:
+                freq_lo *= 2
+
             gen_lo.send(f'SOUR:FREQ {freq_lo}GHz')
+
             delta_lo = round(self._calibrated_pows_lo.get(freq_lo, 0) / 2, 2)
             print('delta LO:', delta_lo)
             gen_lo.send(f'SOUR:POW {pow_lo + delta_lo}dbm')
@@ -344,9 +350,6 @@ class InstrumentController(QObject):
             gen_rf.send(f'SOUR:FREQ {freq_rf}GHz')
 
             for pow_rf in pow_rf_values:
-
-                if freq_lo_x2:
-                    freq_lo *= 2
 
                 if token.cancelled:
                     gen_lo.send(f'OUTP:STAT OFF')
@@ -379,7 +382,7 @@ class InstrumentController(QObject):
 
                 i_mul_read = float(mult.query('MEAS:CURR:DC? 1A,DEF'))
 
-                center_freq = freq_rf - freq_lo
+                center_freq = (freq_rf - freq_lo) if not freq_lo_x2 else (freq_rf - freq_lo / 2)
                 sa.send(':CALC:MARK1:MODE POS')
                 sa.send(f':SENSe:FREQuency:CENTer {center_freq}GHz')
                 sa.send(f':CALCulate:MARKer1:X:CENTer {center_freq}GHz')
@@ -390,7 +393,7 @@ class InstrumentController(QObject):
                 pow_read = float(sa.query(':CALCulate:MARKer:Y?'))
 
                 raw_point = {
-                    'f_lo': freq_lo,
+                    'f_lo': freq_lo_label,
                     'f_rf': freq_rf,
                     'p_lo': pow_lo,
                     'p_rf': pow_rf,

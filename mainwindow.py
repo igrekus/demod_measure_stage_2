@@ -1,6 +1,11 @@
+import datetime
+import os
 import time
 
+from subprocess import Popen
+
 from PyQt5 import uic
+from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtCore import Qt, pyqtSignal, pyqtSlot
 
@@ -52,6 +57,24 @@ class MainWindow(QMainWindow):
         self._measureWidget.updateWidgets(self._instrumentController.secondaryParams)
         self._measureWidget.on_params_changed(1)
 
+    def _saveScreenshot(self):
+        screen = QGuiApplication.primaryScreen()
+        if not screen:
+            print('error saving screenshot')
+            return
+        pixmap = screen.grabWindow(self.winId())
+
+        device = 'demod'
+        path = 'png'
+        if not os.path.isdir(f'{path}'):
+            os.makedirs(f'{path}')
+
+        file_name = f'./{path}/{device}-{datetime.datetime.now().isoformat().replace(":", ".")}.png'
+        pixmap.save(file_name)
+
+        full_path = os.path.abspath(file_name)
+        Popen(f'explorer /select,"{full_path}"')
+
     @pyqtSlot()
     def on_instrumens_connected(self):
         print(f'connected {self._instrumentController}')
@@ -102,3 +125,7 @@ class MainWindow(QMainWindow):
     @pyqtSlot()
     def on_btnExcel_clicked(self):
         self._instrumentController.result.export_excel()
+
+    @pyqtSlot()
+    def on_btnScreenShot_clicked(self):
+        self._saveScreenshot()

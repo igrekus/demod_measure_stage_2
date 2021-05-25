@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>1107</width>
-    <height>658</height>
+    <height>675</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Измерение демодуляторов, этап 2</string>
+   <string>Измерение демодуляторов</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,0,12">
@@ -49,6 +49,12 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>500</height>
+          </size>
+         </property>
          <property name="maximumSize">
           <size>
            <width>200</width>
@@ -73,9 +79,16 @@
           </spacer>
          </item>
          <item>
+          <widget class="QPushButton" name="btnScreenShot">
+           <property name="text">
+            <string>в .png</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="btnExcel">
            <property name="text">
-            <string>Экспорт в .xlsx</string>
+            <string>в .xlsx</string>
            </property>
           </widget>
          </item>

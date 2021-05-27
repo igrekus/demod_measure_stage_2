@@ -9,6 +9,8 @@ from textwrap import dedent
 
 import pandas as pd
 
+from util.file import load_ast_if_exists, pprint_to_file
+
 KHz = 1_000
 MHz = 1_000_000
 GHz = 1_000_000_000
@@ -26,10 +28,7 @@ class MeasureResult:
 
         self.data = defaultdict(list)
 
-        self.adjustment = None
-        if os.path.isfile('./adjust.ini'):
-            with open('./adjust.ini', 'rt', encoding='utf-8') as f:
-                self.adjustment = ast.literal_eval(''.join(f.readlines()))
+        self.adjustment = load_ast_if_exists('adjust.ini', default=None)
 
     def __bool__(self):
         return self.ready
@@ -97,8 +96,7 @@ class MeasureResult:
                 'k_loss': 0,
 
             } for p in self._processed]
-        with open('adjust.ini', mode='wt', encoding='utf-8') as f:
-            pprint.pprint(self.adjustment, stream=f, sort_dicts=False)
+        pprint_to_file('adjust.ini', self.adjustment)
 
     @property
     def report(self):

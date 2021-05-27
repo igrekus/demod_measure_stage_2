@@ -9,7 +9,8 @@ from textwrap import dedent
 
 import pandas as pd
 
-from util.file import load_ast_if_exists, pprint_to_file
+from util.file import load_ast_if_exists, pprint_to_file, make_dirs
+from util.string import now_timestamp
 
 KHz = 1_000
 MHz = 1_000_000
@@ -139,9 +140,10 @@ class MeasureResult:
     def export_excel(self):
         device = 'demod'
         path = 'xlsx'
-        if not os.path.isdir(f'{path}'):
-            os.makedirs(f'{path}')
-        file_name = f'./{path}/{device}-{datetime.datetime.now().isoformat().replace(":", ".")}.xlsx'
+
+        make_dirs(path)
+
+        file_name = f'./{path}/{device}-{now_timestamp()}.xlsx'
         df = pd.DataFrame(self._processed)
 
         df.columns = [
@@ -152,6 +154,12 @@ class MeasureResult:
             'Pпч, дБм',
             'Кп, дБм'
         ]
+        df.to_excel(file_name, engine='openpyxl', index=False)
+
+        file_name = f'./{path}/{device}-cutoff-{now_timestamp()}.xlsx'
+        df = pd.DataFrame([{'f_lo': d[0], 'p_rf': d[1]} for d in self._processed_cutoffs[1]])
+
+        df.columns = ['Fгет., ГГц', 'Pвх.-1дБ, дБ']
         df.to_excel(file_name, engine='openpyxl', index=False)
 
         full_path = os.path.abspath(file_name)

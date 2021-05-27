@@ -14,7 +14,6 @@ from util.file import load_ast_if_exists, pprint_to_file
 
 # TODO calc - 1db relative to starting point, record freq
 # TODO plot - 1db points
-# TODO take screenshot of main window
 
 class InstrumentController(QObject):
     pointReady = pyqtSignal()

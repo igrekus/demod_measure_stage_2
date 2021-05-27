@@ -118,7 +118,6 @@ class MeasureResult:
         Кп, дБм={k_loss}""".format(**self._report))
 
     def export_excel(self):
-        # TODO implement
         device = 'demod'
         path = 'xlsx'
         if not os.path.isdir(f'{path}'):

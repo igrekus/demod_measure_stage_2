@@ -12,9 +12,6 @@ from measureresult import MeasureResult
 from util.file import load_ast_if_exists, pprint_to_file
 
 
-# TODO calc - 1db relative to starting point, record freq
-# TODO plot - 1db points
-
 class InstrumentController(QObject):
     pointReady = pyqtSignal()
 

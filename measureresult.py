@@ -28,7 +28,7 @@ class MeasureResult:
         self.ready = False
 
         self.data = defaultdict(list)
-        self.data2 = list()
+        self.data2 = dict()
 
         self.adjustment = load_ast_if_exists('adjust.ini', default=None)
 
@@ -37,7 +37,7 @@ class MeasureResult:
 
     def _process(self):
         cutoff_level = -1
-        cutoffs = []
+        cutoffs = {1: []}
 
         for f_lo, datas in self.data.items():
             reference = datas[0][1]
@@ -49,7 +49,7 @@ class MeasureResult:
                     cutoff_idx = idx
                     cutoff_point = pow_in
                     break
-            cutoffs.append([f_lo, cutoff_point])
+            cutoffs[1].append([f_lo, cutoff_point])
 
         self.data2 = cutoffs
         self._processed_cutoffs = cutoffs

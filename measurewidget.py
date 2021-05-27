@@ -286,7 +286,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinLoss.setMinimum(0)
         self._spinLoss.setMaximum(50)
         self._spinLoss.setSingleStep(1)
-        self._spinLoss.setValue(5)
+        self._spinLoss.setValue(0.82)
         self._spinLoss.setSuffix(' дБ')
         self._devices._layout.addRow('Пбал.=', self._spinLoss)
         # endregion

@@ -24,9 +24,11 @@ class MeasureResult:
         self._raw = list()
         self._report = dict()
         self._processed = list()
+        self._processed_cutoffs = list()
         self.ready = False
 
         self.data = defaultdict(list)
+        self.data2 = list()
 
         self.adjustment = load_ast_if_exists('adjust.ini', default=None)
 
@@ -34,6 +36,23 @@ class MeasureResult:
         return self.ready
 
     def _process(self):
+        cutoff_level = -1
+        cutoffs = []
+
+        for f_lo, datas in self.data.items():
+            reference = datas[0][1]
+            cutoff_point = 0
+            cutoff_idx = 0
+            for idx, pair in enumerate(datas):
+                pow_in, pow_out = pair
+                if reference - pow_out > abs(cutoff_level):
+                    cutoff_idx = idx
+                    cutoff_point = pow_in
+                    break
+            cutoffs.append([f_lo, cutoff_point])
+
+        self.data2 = cutoffs
+        self._processed_cutoffs = cutoffs
         self.ready = True
 
     def _process_point(self, data):

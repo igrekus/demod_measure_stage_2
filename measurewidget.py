@@ -314,8 +314,6 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._devices._layout.addRow('Scale y=', self._spinScaleY)
         # endregion
 
-        self._connectSignals()
-
     def _connectSignals(self):
         self._spinPlo.valueChanged.connect(self.on_params_changed)
         self._spinFloMin.valueChanged.connect(self.on_params_changed)
@@ -434,6 +432,8 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinLoss.setValue(params['loss'])
         self._spinRefLevel.setValue(params['ref_lev'])
         self._spinScaleY.setValue(params['scale_y'])
+
+        self._connectSignals()
 
     def on_debounced_gui(self):
         remove_if_exists('cal_lo.ini')

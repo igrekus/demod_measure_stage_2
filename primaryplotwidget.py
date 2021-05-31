@@ -56,7 +56,7 @@ class PrimaryPlotWidget(QWidget):
         self._proxy_00 = pg.SignalProxy(self._plot_00.scene().sigMouseMoved, rateLimit=60, slot=self.mouseMoved_00)
 
         self._plot_01.setLabel('left', 'Отсечка -дБ', **self.label_style)
-        self._plot_01.setLabel('bottom', 'Fгет., ГГц', **self.label_style)
+        self._plot_01.setLabel('bottom', 'Fвх., ГГц', **self.label_style)
         self._plot_01.enableAutoRange('x')
         self._plot_01.enableAutoRange('y')
         self._plot_01.showGrid(x=True, y=True)
@@ -117,11 +117,11 @@ class PrimaryPlotWidget(QWidget):
 
     def plot(self):
         print('plotting primary stats')
-        _plot_curves(self._controller.result.data, self._curves_00, self._plot_00, suffix=' ГГц')
+        _plot_curves(self._controller.result.data, self._curves_00, self._plot_00, prefix='Fвх=', suffix=' ГГц')
         _plot_curves(self._controller.result.data2, self._curves_01, self._plot_01)
 
 
-def _plot_curves(datas, curves, plot, suffix=''):
+def _plot_curves(datas, curves, plot, prefix='', suffix=''):
     for f_lo, data in datas.items():
         curve_xs, curve_ys = zip(*data)
         try:
@@ -141,7 +141,7 @@ def _plot_curves(datas, curves, plot, suffix=''):
                 symbol='o',
                 symbolSize=5,
                 symbolBrush=color,
-                name=f'{f_lo}{suffix}'
+                name=f'{prefix}{f_lo}{suffix}'
             )
             plot.addItem(curves[f_lo])
 

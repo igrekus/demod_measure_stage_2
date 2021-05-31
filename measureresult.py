@@ -40,7 +40,7 @@ class MeasureResult:
         cutoff_level = -1
         cutoffs = {1: []}
 
-        for f_lo, datas in self.data.items():
+        for f_rf, datas in self.data.items():
             reference = datas[0][1]
             cutoff_point = 0
             cutoff_idx = 0
@@ -50,7 +50,7 @@ class MeasureResult:
                     cutoff_idx = idx
                     cutoff_point = pow_in
                     break
-            cutoffs[1].append([f_lo, cutoff_point])
+            cutoffs[1].append([f_rf, cutoff_point])
 
         self.data2 = cutoffs
         self._processed_cutoffs = cutoffs
@@ -60,7 +60,7 @@ class MeasureResult:
         # region calc
         f_rf = data['f_rf']
         f_lo = data['f_lo']
-        f_lo_label = data['f_lo_label']
+        f_rf_label = data['f_rf_label']
         f_pch = f_rf - f_lo
 
         p_pch = data['pow_read']
@@ -86,7 +86,7 @@ class MeasureResult:
             'k_loss': round(k_loss, 2),
         }
 
-        self.data[f_lo_label].append([p_rf, k_loss])
+        self.data[f_rf_label].append([p_rf, k_loss])
         self._processed.append({**self._report})
 
     def clear(self):

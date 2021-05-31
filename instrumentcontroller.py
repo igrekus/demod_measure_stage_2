@@ -369,7 +369,8 @@ class InstrumentController(QObject):
                 pow_read = float(sa.query(':CALCulate:MARKer:Y?'))
 
                 raw_point = {
-                    'f_lo': freq_lo_label,
+                    'f_lo': freq_lo,
+                    'f_lo_label': freq_lo_label,
                     'f_rf': freq_rf,
                     'p_lo': pow_lo,
                     'p_rf': pow_rf,
@@ -382,6 +383,7 @@ class InstrumentController(QObject):
                 if mock_enabled:
                     raw_point = mocked_raw_data[index]
                     raw_point['loss'] = p_loss
+                    raw_point['f_lo_label'] = freq_lo_label
                     index += 1
 
                 print(raw_point)

@@ -60,7 +60,8 @@ class MeasureResult:
         # region calc
         f_rf = data['f_rf']
         f_lo = data['f_lo']
-        f_pch = (f_rf - f_lo)
+        f_lo_label = data['f_lo_label']
+        f_pch = f_rf - f_lo
 
         p_pch = data['pow_read']
         p_lo = data['p_lo']
@@ -85,7 +86,7 @@ class MeasureResult:
             'k_loss': round(k_loss, 2),
         }
 
-        self.data[f_lo].append([p_rf, k_loss])
+        self.data[f_lo_label].append([p_rf, k_loss])
         self._processed.append({**self._report})
 
     def clear(self):

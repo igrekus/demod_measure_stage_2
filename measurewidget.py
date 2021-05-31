@@ -436,6 +436,6 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._connectSignals()
 
     def on_debounced_gui(self):
-        remove_if_exists('cal_lo.ini')
-        remove_if_exists('cal_rf.ini')
+        # remove_if_exists('cal_lo.ini')
+        # remove_if_exists('cal_rf.ini')
         remove_if_exists('adjust.ini')

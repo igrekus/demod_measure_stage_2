@@ -341,6 +341,8 @@ class InstrumentController(QObject):
 
                     gen_rf.send(f'SOUR:FREQ {freq_rf_start}GHz')
                     gen_lo.send(f'SOUR:FREQ {freq_rf_start}GHz')
+
+                    sa.send(':CAL:AUTO ON')
                     raise RuntimeError('measurement cancelled')
 
                 delta_rf = round(self._calibrated_pows_rf.get(freq_rf, dict()).get(pow_rf, 0) / 2, 2)
@@ -408,6 +410,8 @@ class InstrumentController(QObject):
 
         gen_rf.send(f'SOUR:FREQ {freq_rf_start}GHz')
         gen_lo.send(f'SOUR:FREQ {freq_rf_start}GHz')
+
+        sa.send(':CAL:AUTO ON')
         return res
 
     def _add_measure_point(self, data):

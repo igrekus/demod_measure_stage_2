@@ -32,10 +32,7 @@ class PrimaryPlotWidget(QWidget):
         self._grid.addWidget(self._win, 1, 0)
 
         self._plot_00 = self._win.addPlot(row=0, col=0)
-        # self._plot_00.setTitle('К-т преобразования')
-
         self._plot_01 = self._win.addPlot(row=1, col=0)
-        # self._plot_00.setTitle('К-т преобразования')
 
         self._curves_00 = dict()
         self._curves_01 = dict()

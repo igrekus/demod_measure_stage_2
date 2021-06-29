@@ -50,6 +50,8 @@ class MeasureResult:
                     cutoff_idx = idx
                     cutoff_point = pow_in
                     break
+            else:
+                cutoff_point = pow_in
             cutoffs[1].append([f_rf, cutoff_point])
 
         self.data2 = cutoffs
@@ -94,6 +96,7 @@ class MeasureResult:
         self._raw.clear()
         self._report.clear()
         self._processed.clear()
+        self._processed_cutoffs.clear()
 
         self.data.clear()
 

@@ -70,8 +70,11 @@ class MeasureResult:
         # endregion
 
         if self.adjustment is not None:
-            point = self.adjustment[len(self._processed)]
-            k_loss += point['k_loss']
+            try:
+                point = self.adjustment[len(self._processed)]
+                k_loss += point['k_loss']
+            except IndexError:
+                pass
 
         self._report = {
             'p_lo': p_lo,
@@ -126,7 +129,7 @@ class MeasureResult:
         Fгет, ГГц={f_lo:0.2f}
         Pвх, дБм={p_rf}
         Fвх, ГГц={f_rf:0.2f}
-        Fпч, МГц={f_pch:0.2f}
+        Fпч, ГГц={f_pch:0.3f}
         
         Источник питания:
         U, В={u_mul}

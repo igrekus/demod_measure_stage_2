@@ -51,6 +51,7 @@ class InstrumentController(QObject):
             'Flo_max': 3.05,
             'Flo_min': 0.05,
             'is_Flo_x2': False,
+            'D': False,
             'Plo': -5.0,
             'Usrc': 5.0,
             'loss': 0.82,
@@ -289,6 +290,7 @@ class InstrumentController(QObject):
         scale_y = secondary['scale_y']
 
         p_loss = secondary['loss']
+        d = secondary['D']
 
         pow_rf_values = [round(x, 3) for x in np.arange(start=pow_rf_start, stop=pow_rf_end + 0.002, step=pow_rf_step)]
         freq_lo_values = [round(x, 3) for x in
@@ -302,8 +304,16 @@ class InstrumentController(QObject):
         sa.send(':SENS:FREQ:SPAN 1MHz')
         sa.send(f'DISP:WIND:TRAC:Y:RLEV {ref_level}')
         sa.send(f'DISP:WIND:TRAC:Y:PDIV {scale_y}')
+        if d:
+            f_offset = 5
+            sa.send(f'DISP:WIND:TRAC:X:OFFS {f_offset}MHz')
+            # sa.send(f'DISP:WIND:ANN OFF')
 
         gen_lo.send(f':OUTP:MOD:STAT OFF')
+
+        gen_f_mult = 2 if d else 1
+        gen_rf.send(f':FREQ:MULT {gen_f_mult}')
+        gen_lo.send(f':FREQ:MULT {gen_f_mult}')
 
         if mock_enabled:
             with open('./mock_data/-5db.txt', mode='rt', encoding='utf-8') as f:
@@ -361,6 +371,7 @@ class InstrumentController(QObject):
                 i_mul_read = float(mult.query('MEAS:CURR:DC? 1A,DEF'))
 
                 center_freq = (freq_rf - freq_lo) if not freq_lo_x2 else (freq_rf - freq_lo / 2)
+                # center_freq /= 2
                 sa.send(':CALC:MARK1:MODE POS')
                 sa.send(f':SENSe:FREQuency:CENTer {center_freq}GHz')
                 sa.send(f':CALCulate:MARKer1:X:CENTer {center_freq}GHz')

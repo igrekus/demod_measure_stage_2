@@ -190,7 +190,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
 
         # region LO params
         self._spinPlo = QDoubleSpinBox(parent=self)
-        self._spinPlo.setMinimum(-30)
+        self._spinPlo.setMinimum(-80)
         self._spinPlo.setMaximum(30)
         self._spinPlo.setSingleStep(1)
         self._spinPlo.setValue(-5)
@@ -228,7 +228,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
 
         # region RF params
         self._spinPrfMin = QDoubleSpinBox(parent=self)
-        self._spinPrfMin.setMinimum(-30)
+        self._spinPrfMin.setMinimum(-80)
         self._spinPrfMin.setMaximum(30)
         self._spinPrfMin.setSingleStep(1)
         self._spinPrfMin.setValue(-20)
@@ -236,7 +236,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._devices._layout.addRow('Pвх.мин=', self._spinPrfMin)
 
         self._spinPrfMax = QDoubleSpinBox(parent=self)
-        self._spinPrfMax.setMinimum(-30)
+        self._spinPrfMax.setMinimum(-80)
         self._spinPrfMax.setMaximum(30)
         self._spinPrfMax.setSingleStep(1)
         self._spinPrfMax.setValue(6)
@@ -244,7 +244,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._devices._layout.addRow('Pвх.макс=', self._spinPrfMax)
 
         self._spinPrfDelta = QDoubleSpinBox(parent=self)
-        self._spinPrfDelta.setMinimum(-30)
+        self._spinPrfDelta.setMinimum(-80)
         self._spinPrfDelta.setMaximum(30)
         self._spinPrfDelta.setSingleStep(1)
         self._spinPrfDelta.setValue(2)

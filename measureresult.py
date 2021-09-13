@@ -1,7 +1,4 @@
-import ast
-import datetime
 import os.path
-import pprint
 
 from collections import defaultdict
 from subprocess import Popen
@@ -9,8 +6,8 @@ from textwrap import dedent
 
 import pandas as pd
 
-from util.file import load_ast_if_exists, pprint_to_file, make_dirs
-from util.string import now_timestamp
+from forgot_again.file import load_ast_if_exists, pprint_to_file, make_dirs
+from forgot_again.string import now_timestamp
 
 KHz = 1_000
 MHz = 1_000_000

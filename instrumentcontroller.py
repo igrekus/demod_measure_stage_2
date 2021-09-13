@@ -9,7 +9,7 @@ from PyQt5.QtCore import QObject, pyqtSlot, pyqtSignal
 from instr.instrumentfactory import mock_enabled, GeneratorFactory, SourceFactory, \
     MultimeterFactory, AnalyzerFactory
 from measureresult import MeasureResult
-from util.file import load_ast_if_exists, pprint_to_file
+from forgot_again.file import load_ast_if_exists, pprint_to_file
 
 
 class InstrumentController(QObject):

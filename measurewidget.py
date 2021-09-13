@@ -3,7 +3,7 @@ from PyQt5.QtCore import pyqtSlot, pyqtSignal, QRunnable, QThreadPool, QTimer
 from PyQt5.QtWidgets import QWidget, QDoubleSpinBox, QCheckBox
 
 from deviceselectwidget import DeviceSelectWidget
-from util.file import remove_if_exists
+from forgot_again.file import remove_if_exists
 
 
 class MeasureTask(QRunnable):

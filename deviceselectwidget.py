@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import QWidget, QComboBox, QFormLayout
 
 class DeviceSelectWidget(QWidget):
 
-    selectedChanged = pyqtSignal(int)
+    selectedChanged = pyqtSignal(str)
 
     def __init__(self, parent=None, params=None):
         super().__init__(parent=parent)
@@ -20,7 +20,7 @@ class DeviceSelectWidget(QWidget):
         self.setLayout(self._layout)
 
         self._combo.setCurrentIndex(0)
-        self._combo.currentIndexChanged.connect(self.on_indexChanged)
+        self._combo.currentTextChanged.connect(self.on_textChanged)
 
         self._enabled = True
 
@@ -28,9 +28,8 @@ class DeviceSelectWidget(QWidget):
     def selected(self):
         return self._combo.currentText()
 
-    @pyqtSlot(int)
-    def on_indexChanged(self, text):
-        print(text)
+    @pyqtSlot(str)
+    def on_textChanged(self, text):
         self.selectedChanged.emit(text)
 
     @property

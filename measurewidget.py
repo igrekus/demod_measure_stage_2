@@ -28,7 +28,7 @@ class CancelToken:
 
 class MeasureWidget(QWidget):
 
-    selectedChanged = pyqtSignal(int)
+    selectedChanged = pyqtSignal(str)
     sampleFound = pyqtSignal()
     measureComplete = pyqtSignal()
     measureStarted = pyqtSignal()
@@ -121,7 +121,7 @@ class MeasureWidget(QWidget):
         print('cancel click')
         self.cancel()
 
-    @pyqtSlot(int)
+    @pyqtSlot(str)
     def on_selectedChanged(self, value):
         self._selectedDevice = value
         self.selectedChanged.emit(value)

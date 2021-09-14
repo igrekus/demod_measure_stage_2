@@ -14,6 +14,7 @@ from instrumentcontroller import InstrumentController
 from connectionwidget import ConnectionWidget
 from measurewidget import MeasureWidgetWithSecondaryParameters
 from primaryplotwidget import PrimaryPlotWidget
+from resulttablewidget import ResultTableWidget
 
 
 class MainWindow(QMainWindow):
@@ -30,16 +31,21 @@ class MainWindow(QMainWindow):
 
         # create instance variables
         self._ui = uic.loadUi('mainwindow.ui', self)
+        self.setWindowTitle('Измерение параметров КД')
+
         self._instrumentController = InstrumentController(parent=self)
         self._connectionWidget = ConnectionWidget(parent=self, controller=self._instrumentController)
         self._measureWidget = MeasureWidgetWithSecondaryParameters(parent=self, controller=self._instrumentController)
         self._plotWidget = PrimaryPlotWidget(parent=self, controller=self._instrumentController)
+        self._tableResultWidget = ResultTableWidget(parent=self, controller=self._instrumentController)
 
         # init UI
         self._ui.layInstrs.insertWidget(0, self._connectionWidget)
         self._ui.layInstrs.insertWidget(1, self._measureWidget)
 
-        self._ui.tabWidget.insertTab(0, self._plotWidget, 'Автоматическое измерение')
+        self._ui.tabWidget.insertTab(0, self._tableResultWidget, 'Результат измерения')
+        self._ui.tabWidget.insertTab(0, self._plotWidget, 'Прогресс измерения')
+        self._ui.tabWidget.setCurrentIndex(0)
 
         self._init()
 
@@ -82,9 +88,10 @@ class MainWindow(QMainWindow):
     @pyqtSlot()
     def on_measureComplete(self):
         print('meas complete')
-        self._instrumentController.result._process()
+        self._instrumentController.result.process()
         self._plotWidget.plot()
         self._instrumentController.result.save_adjustment_template()
+        self._tableResultWidget.updateResult()
 
     @pyqtSlot()
     def on_measureStarted(self):

@@ -63,6 +63,7 @@ class InstrumentController(QObject):
             'D': False,
             'Plo': -5.0,
             'Usrc': 5.0,
+            'UsrcD': 3.3,
             'loss': 0.82,
             'ref_lev': 10.0,
             'scale_y': 5.0,
@@ -281,6 +282,8 @@ class InstrumentController(QObject):
 
         src_u = secondary['Usrc']
         src_i = 200  # mA
+        src_u_d = secondary['UsrcD']
+        src_i_d = 20  # mA
 
         pow_lo = secondary['Plo']
         freq_lo_start = secondary['Flo_min']
@@ -309,6 +312,7 @@ class InstrumentController(QObject):
                           np.arange(start=freq_rf_start, stop=freq_rf_end + 0.002, step=freq_rf_step)]
 
         src.send(f'APPLY p6v,{src_u}V,{src_i}mA')
+        src.send(f'APPLY p25v,{src_u_d}V,{src_i_d}mA')
 
         sa.send(':CAL:AUTO OFF')
         sa.send(':SENS:FREQ:SPAN 1MHz')

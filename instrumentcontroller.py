@@ -22,16 +22,12 @@ class InstrumentController(QObject):
             'Анализатор': 'GPIB1::18::INSTR',
             'P LO': 'GPIB1::6::INSTR',
             'P RF': 'GPIB1::20::INSTR',
-            'Источник': 'GPIB1::3::INSTR',
-            'Мультиметр': 'GPIB1::22::INSTR',
         })
 
         self.requiredInstruments = {
             'Анализатор': AnalyzerFactory(addrs['Анализатор']),
             'P LO': GeneratorFactory(addrs['P LO']),
             'P RF': GeneratorFactory(addrs['P RF']),
-            'Источник': SourceFactory(addrs['Источник']),
-            'Мультиметр': MultimeterFactory(addrs['Мультиметр']),
         }
 
         self.deviceParams = {
@@ -62,8 +58,6 @@ class InstrumentController(QObject):
             'is_Flo_x2': False,
             'D': False,
             'Plo': -5.0,
-            'Usrc': 5.0,
-            'UsrcD': 3.3,
             'loss': 0.82,
             'ref_lev': 10.0,
             'scale_y': 5.0,
@@ -269,21 +263,12 @@ class InstrumentController(QObject):
     def _init(self):
         self._instruments['P LO'].send('*RST')
         self._instruments['P RF'].send('*RST')
-        self._instruments['Источник'].send('*RST')
-        self._instruments['Мультиметр'].send('*RST')
         self._instruments['Анализатор'].send('*RST')
 
     def _measure_s_params(self, token, param, secondary):
         gen_lo = self._instruments['P LO']
         gen_rf = self._instruments['P RF']
-        src = self._instruments['Источник']
-        mult = self._instruments['Мультиметр']
         sa = self._instruments['Анализатор']
-
-        src_u = secondary['Usrc']
-        src_i = 200  # mA
-        src_u_d = secondary['UsrcD']
-        src_i_d = 20  # mA
 
         pow_lo = secondary['Plo']
         freq_lo_start = secondary['Flo_min']
@@ -310,9 +295,6 @@ class InstrumentController(QObject):
                           np.arange(start=freq_lo_start, stop=freq_lo_end + 0.002, step=freq_lo_step)]
         freq_rf_values = [round(x, 3) for x in
                           np.arange(start=freq_rf_start, stop=freq_rf_end + 0.002, step=freq_rf_step)]
-
-        src.send(f'APPLY p6v,{src_u}V,{src_i}mA')
-        src.send(f'APPLY p25v,{src_u_d}V,{src_i_d}mA')
 
         sa.send(':CAL:AUTO OFF')
         sa.send(':SENS:FREQ:SPAN 1MHz')
@@ -358,8 +340,6 @@ class InstrumentController(QObject):
                     if not mock_enabled:
                         time.sleep(0.5)
 
-                    src.send('OUTPut OFF')
-
                     gen_rf.send(f'SOUR:POW {pow_rf_start}dbm')
                     gen_lo.send(f'SOUR:POW {pow_lo}dbm')
 
@@ -373,16 +353,12 @@ class InstrumentController(QObject):
                 print('delta RF:', delta_rf)
                 gen_rf.send(f'SOUR:POW {pow_rf + delta_rf}dbm')
 
-                src.send('OUTPut ON')
-
                 gen_lo.send(f'OUTP:STAT ON')
                 gen_rf.send(f'OUTP:STAT ON')
 
                 time.sleep(0.1)
                 if not mock_enabled:
                     time.sleep(0.5)
-
-                i_mul_read = float(mult.query('MEAS:CURR:DC? 1A,DEF'))
 
                 center_freq = (freq_rf - freq_lo) if not freq_lo_x2 else (freq_rf - freq_lo / 2)
                 # center_freq /= 2
@@ -401,8 +377,6 @@ class InstrumentController(QObject):
                     'f_rf': freq_rf,
                     'p_lo': pow_lo,
                     'p_rf': pow_rf,
-                    'u_mul': src_u,
-                    'i_mul': i_mul_read,
                     'pow_read': pow_read,
                     'loss': p_loss,
                 }
@@ -427,8 +401,6 @@ class InstrumentController(QObject):
 
         if not mock_enabled:
             time.sleep(0.5)
-
-        src.send('OUTPut OFF')
 
         gen_rf.send(f'SOUR:POW {pow_rf_start}dbm')
         gen_lo.send(f'SOUR:POW {pow_lo}dbm')

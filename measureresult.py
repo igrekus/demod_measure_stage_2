@@ -90,8 +90,6 @@ class MeasureResult:
             'p_rf': p_rf,
             'f_rf': f_rf,
             'f_pch': f_pch,
-            'u_mul': round(data['u_mul'], 1),
-            'i_mul': round(data['i_mul'] * mA, 2),
             'p_pch': p_pch,
             'k_loss': round(k_loss, 2),
         }
@@ -142,10 +140,6 @@ class MeasureResult:
         Pвх, дБм={p_rf}
         Fвх, ГГц={f_rf:0.2f}
         Fпч, ГГц={f_pch:0.3f}
-        
-        Источник питания:
-        U, В={u_mul}
-        I, мА={i_mul}
 
         Анализатор:
         Pпч, дБм={p_pch}
@@ -166,7 +160,6 @@ class MeasureResult:
             'Pгет, дБм', 'Fгет, ГГц',
             'Pвх, дБм', 'Fвх, ГГц',
             'Fпч, ГГц',
-            'Uпит, В', 'Iпит, мА',
             'Pпч, дБм',
             'Кп, дБм'
         ]

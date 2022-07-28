@@ -202,6 +202,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinFloMin.setMaximum(100)
         self._spinFloMin.setSingleStep(1)
         self._spinFloMin.setValue(0.05)
+        self._spinFloMin.setDecimals(5)
         self._spinFloMin.setSuffix(' ГГц')
         self._devices._layout.addRow('Fгет.мин=', self._spinFloMin)
 
@@ -210,6 +211,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinFloMax.setMaximum(100)
         self._spinFloMax.setSingleStep(1)
         self._spinFloMax.setValue(3.05)
+        self._spinFloMax.setDecimals(5)
         self._spinFloMax.setSuffix(' ГГц')
         self._devices._layout.addRow('Fгет.макс=', self._spinFloMax)
 
@@ -218,6 +220,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinFloDelta.setMaximum(100)
         self._spinFloDelta.setSingleStep(0.1)
         self._spinFloDelta.setValue(0.5)
+        self._spinFloDelta.setDecimals(5)
         self._spinFloDelta.setSuffix(' ГГц')
         self._devices._layout.addRow('ΔFгет=', self._spinFloDelta)
 
@@ -260,6 +263,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinFrfMin.setMaximum(100)
         self._spinFrfMin.setSingleStep(1)
         self._spinFrfMin.setValue(0.06)
+        self._spinFrfMin.setDecimals(5)
         self._spinFrfMin.setSuffix(' ГГц')
         self._devices._layout.addRow('Fвх.мин=', self._spinFrfMin)
 
@@ -268,6 +272,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinFrfMax.setMaximum(100)
         self._spinFrfMax.setSingleStep(1)
         self._spinFrfMax.setValue(3.06)
+        self._spinFrfMax.setDecimals(5)
         self._spinFrfMax.setSuffix(' ГГц')
         self._devices._layout.addRow('Fвх.макс=', self._spinFrfMax)
 
@@ -276,6 +281,7 @@ class MeasureWidgetWithSecondaryParameters(MeasureWidget):
         self._spinFrfDelta.setMaximum(100)
         self._spinFrfDelta.setSingleStep(0.1)
         self._spinFrfDelta.setValue(0.5)
+        self._spinFrfDelta.setDecimals(5)
         self._spinFrfDelta.setSuffix(' ГГц')
         self._devices._layout.addRow('ΔFвх.=', self._spinFrfDelta)
         # endregion
